@@ -1,37 +1,60 @@
+// ============================================
+// VITA CAÑETE
+// SISTEMA DE PEDIDOS E INVENTARIO
+// ============================================
+
 
 // ============================================
-// VITA CAÑETE - SISTEMA DE INVENTARIO
+// CATEGORÍAS
 // ============================================
 
-// Categorías del bowl
 const CATEGORIAS = [
+
     "Carnes",
+
     "Vegetales",
+
     "Carbohidratos",
+
     "Otros",
+
     "Aderezos"
+
 ];
 
-// Nombre utilizado para guardar los datos
-const CLAVE_STORAGE = "vitaCaneteInventario";
+
+// ============================================
+// CLAVES LOCALSTORAGE
+// ============================================
+
+const CLAVE_STORAGE =
+    "vitaCaneteInventario";
+
+
+const CLAVE_MOVIMIENTOS =
+    "vitaCaneteMovimientos";
+
 
 // ============================================
 // INVENTARIO INICIAL
 // ============================================
 
 const inventarioInicial = [
+
     {
         id: 1,
         nombre: "Pollo",
         categoria: "Carnes",
         stock: 20
     },
+
     {
         id: 2,
         nombre: "Atún",
         categoria: "Carnes",
         stock: 15
     },
+
     {
         id: 3,
         nombre: "Huevo",
@@ -39,24 +62,28 @@ const inventarioInicial = [
         stock: 30
     },
 
+
     {
         id: 4,
         nombre: "Lechuga",
         categoria: "Vegetales",
         stock: 30
     },
+
     {
         id: 5,
         nombre: "Tomate",
         categoria: "Vegetales",
         stock: 25
     },
+
     {
         id: 6,
         nombre: "Zanahoria",
         categoria: "Vegetales",
         stock: 20
     },
+
     {
         id: 7,
         nombre: "Choclo",
@@ -64,12 +91,14 @@ const inventarioInicial = [
         stock: 20
     },
 
+
     {
         id: 8,
         nombre: "Arroz",
         categoria: "Carbohidratos",
         stock: 40
     },
+
     {
         id: 9,
         nombre: "Quinoa",
@@ -77,12 +106,14 @@ const inventarioInicial = [
         stock: 20
     },
 
+
     {
         id: 10,
         nombre: "Palta",
         categoria: "Otros",
         stock: 18
     },
+
     {
         id: 11,
         nombre: "Aceitunas",
@@ -90,12 +121,14 @@ const inventarioInicial = [
         stock: 25
     },
 
+
     {
         id: 12,
         nombre: "Salsa César",
         categoria: "Aderezos",
         stock: 20
     }
+
 ];
 
 
@@ -115,20 +148,27 @@ let timeoutNotificacion;
 
 
 // ============================================
-// INICIO DEL SISTEMA
+// INICIO
 // ============================================
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
 
-    cargarInventario();
+        cargarInventario();
 
-    renderizarTodo();
+        cargarMovimientos();
 
-    mostrarSeccion("crear-bowl");
+        renderizarTodo();
 
-    registrarServiceWorker();
+        mostrarSeccion(
+            "crear-bowl"
+        );
 
-});
+        registrarServiceWorker();
+
+    }
+);
 
 
 // ============================================
@@ -137,38 +177,73 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function cargarInventario() {
 
-    const datos = localStorage.getItem(CLAVE_STORAGE);
+    const datos =
+        localStorage.getItem(
+            CLAVE_STORAGE
+        );
+
 
     if (datos) {
 
         try {
 
-            inventario = JSON.parse(datos).map(function (ingrediente) {
+            inventario =
+                JSON.parse(datos)
+                .map(
+                    function (ingrediente) {
 
-                return {
-                    ...ingrediente,
-                    stock: Number(ingrediente.stock) || 0
-                };
+                        return {
 
-            });
+                            ...ingrediente,
+
+                            stock:
+                                Number(
+                                    ingrediente.stock
+                                ) || 0
+
+                        };
+
+                    }
+                );
+
 
         } catch (error) {
 
-            inventario = inventarioInicial.map(function (ingrediente) {
-                return { ...ingrediente };
-            });
+            inventario =
+                inventarioInicial.map(
+                    function (ingrediente) {
+
+                        return {
+                            ...ingrediente
+                        };
+
+                    }
+                );
+
 
             guardarInventario();
+
         }
+
 
     } else {
 
-        inventario = inventarioInicial.map(function (ingrediente) {
-            return { ...ingrediente };
-        });
+        inventario =
+            inventarioInicial.map(
+                function (ingrediente) {
+
+                    return {
+                        ...ingrediente
+                    };
+
+                }
+            );
+
 
         guardarInventario();
+
     }
+
 }
 
 
@@ -179,8 +254,68 @@ function cargarInventario() {
 function guardarInventario() {
 
     localStorage.setItem(
+
         CLAVE_STORAGE,
-        JSON.stringify(inventario)
+
+        JSON.stringify(
+            inventario
+        )
+
+    );
+
+}
+
+
+// ============================================
+// CARGAR MOVIMIENTOS
+// ============================================
+
+function cargarMovimientos() {
+
+    const datos =
+        localStorage.getItem(
+            CLAVE_MOVIMIENTOS
+        );
+
+
+    if (datos) {
+
+        try {
+
+            movimientosStock =
+                JSON.parse(datos);
+
+
+        } catch (error) {
+
+            movimientosStock = [];
+
+        }
+
+
+    } else {
+
+        movimientosStock = [];
+
+    }
+
+}
+
+
+// ============================================
+// GUARDAR MOVIMIENTOS
+// ============================================
+
+function guardarMovimientos() {
+
+    localStorage.setItem(
+
+        CLAVE_MOVIMIENTOS,
+
+        JSON.stringify(
+            movimientosStock
+        )
+
     );
 
 }
@@ -192,20 +327,34 @@ function guardarInventario() {
 
 function mostrarSeccion(nombre) {
 
-    const secciones = document.querySelectorAll(".seccion");
-
-    secciones.forEach(function (seccion) {
-
-        seccion.classList.remove("activa");
-
-    });
+    const secciones =
+        document.querySelectorAll(
+            ".seccion"
+        );
 
 
-    const seccionSeleccionada = document.getElementById(nombre);
+    secciones.forEach(
+        function (seccion) {
+
+            seccion.classList.remove(
+                "activa"
+            );
+
+        }
+    );
+
+
+    const seccionSeleccionada =
+        document.getElementById(
+            nombre
+        );
+
 
     if (seccionSeleccionada) {
 
-        seccionSeleccionada.classList.add("activa");
+        seccionSeleccionada.classList.add(
+            "activa"
+        );
 
     }
 
@@ -227,6 +376,10 @@ function mostrarSeccion(nombre) {
     if (nombre === "agregar-stock") {
 
         renderizarSelectorStock();
+
+        actualizarStockActual();
+
+        renderizarMovimientosStock();
 
     }
 
@@ -253,65 +406,92 @@ function renderizarTodo() {
 
 
 // ============================================
-// MOSTRAR PROGRESO
+// PROGRESO
 // ============================================
 
 function renderizarProgreso() {
 
-    const contenedor = document.getElementById("progreso");
+    const contenedor =
+        document.getElementById(
+            "progreso"
+        );
+
 
     if (!contenedor) {
+
         return;
+
     }
 
 
     contenedor.innerHTML = "";
 
 
-    CATEGORIAS.forEach(function (categoria, indice) {
+    CATEGORIAS.forEach(
+        function (categoria, indice) {
 
-        const elemento = document.createElement("div");
+            const elemento =
+                document.createElement(
+                    "div"
+                );
 
-        elemento.className = "progreso-item";
+
+            elemento.className =
+                "progreso-item";
 
 
-        if (indice === pasoActual) {
+            if (
+                indice === pasoActual
+            ) {
 
-            elemento.classList.add("activo");
+                elemento.classList.add(
+                    "activo"
+                );
+
+            }
+
+
+            if (
+                indice < pasoActual
+            ) {
+
+                elemento.classList.add(
+                    "completado"
+                );
+
+            }
+
+
+            elemento.textContent =
+                `${indice + 1}. ${categoria}`;
+
+
+            contenedor.appendChild(
+                elemento
+            );
 
         }
-
-
-        if (indice < pasoActual) {
-
-            elemento.classList.add("completado");
-
-        }
-
-
-        elemento.textContent =
-            `${indice + 1}. ${categoria}`;
-
-
-        contenedor.appendChild(elemento);
-
-    });
+    );
 
 }
 
 
 // ============================================
-// MOSTRAR CATEGORÍA ACTUAL
+// RENDERIZAR BOWL
 // ============================================
 
 function renderizarBowl() {
 
     const contenedor =
-        document.getElementById("categorias-bowl");
+        document.getElementById(
+            "categorias-bowl"
+        );
 
 
     if (!contenedor) {
+
         return;
+
     }
 
 
@@ -323,38 +503,56 @@ function renderizarBowl() {
 
 
     const caja =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     caja.className =
         "categoria-contenedor";
 
 
     const titulo =
-        document.createElement("h3");
+        document.createElement(
+            "h3"
+        );
+
 
     titulo.textContent =
         `Selecciona ${categoriaActual}`;
 
 
-    caja.appendChild(titulo);
+    caja.appendChild(
+        titulo
+    );
 
 
     const grid =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     grid.className =
         "ingredientes-grid";
 
 
     const ingredientes =
-        inventario.filter(function (ingrediente) {
+        inventario.filter(
+            function (ingrediente) {
 
-            return ingrediente.categoria === categoriaActual;
+                return (
+                    ingrediente.categoria ===
+                    categoriaActual
+                );
 
-        });
+            }
+        );
 
 
-    if (ingredientes.length === 0) {
+    if (
+        ingredientes.length === 0
+    ) {
 
         grid.innerHTML =
             '<p class="vacio">No hay ingredientes en esta categoría.</p>';
@@ -362,73 +560,107 @@ function renderizarBowl() {
     }
 
 
-    ingredientes.forEach(function (ingrediente) {
-
-        const card =
-            document.createElement("div");
+    ingredientes.forEach(
+        function (ingrediente) {
 
 
-        card.className =
-            "ingrediente-card";
+            const card =
+                document.createElement(
+                    "div"
+                );
 
 
-        const seleccionado =
-            bowl.some(function (item) {
-
-                return item.id === ingrediente.id;
-
-            });
+            card.className =
+                "ingrediente-card";
 
 
-        if (seleccionado) {
+            const seleccionado =
+                bowl.some(
+                    function (item) {
 
-            card.classList.add("seleccionado");
+                        return (
+                            item.id ===
+                            ingrediente.id
+                        );
 
-        }
-
-
-        if (ingrediente.stock <= 0) {
-
-            card.classList.add("sin-stock");
-
-        }
-
-
-        card.innerHTML = `
-            <div class="ingrediente-nombre">
-                ${escapeHTML(ingrediente.nombre)}
-            </div>
-
-            <div class="ingrediente-stock">
-                Stock disponible: ${ingrediente.stock}
-            </div>
-        `;
+                    }
+                );
 
 
-        if (ingrediente.stock > 0) {
+            if (seleccionado) {
 
-            card.addEventListener(
-                "click",
-                function () {
+                card.classList.add(
+                    "seleccionado"
+                );
 
-                    seleccionarIngrediente(
-                        ingrediente.id
-                    );
+            }
 
-                }
+
+            if (
+                ingrediente.stock <= 0
+            ) {
+
+                card.classList.add(
+                    "sin-stock"
+                );
+
+            }
+
+
+            card.innerHTML = `
+
+                <div class="ingrediente-nombre">
+
+                    ${escapeHTML(
+                        ingrediente.nombre
+                    )}
+
+                </div>
+
+                <div class="ingrediente-stock">
+
+                    Stock disponible:
+                    ${ingrediente.stock}
+
+                </div>
+
+            `;
+
+
+            if (
+                ingrediente.stock > 0
+            ) {
+
+                card.addEventListener(
+                    "click",
+                    function () {
+
+                        seleccionarIngrediente(
+                            ingrediente.id
+                        );
+
+                    }
+                );
+
+            }
+
+
+            grid.appendChild(
+                card
             );
 
         }
+    );
 
 
-        grid.appendChild(card);
+    caja.appendChild(
+        grid
+    );
 
-    });
 
-
-    caja.appendChild(grid);
-
-    contenedor.appendChild(caja);
+    contenedor.appendChild(
+        caja
+    );
 
 
     renderizarProgreso();
@@ -447,60 +679,82 @@ function renderizarBowl() {
 function seleccionarIngrediente(id) {
 
     const ingrediente =
-        inventario.find(function (item) {
+        inventario.find(
+            function (item) {
 
-            return item.id === id;
+                return item.id === id;
 
-        });
+            }
+        );
 
 
     if (!ingrediente) {
+
         return;
+
     }
 
 
-    if (ingrediente.stock <= 0) {
+    if (
+        ingrediente.stock <= 0
+    ) {
 
         mostrarNotificacion(
             "Este ingrediente no tiene stock."
         );
 
         return;
+
     }
 
 
     const posicion =
-        bowl.findIndex(function (item) {
+        bowl.findIndex(
+            function (item) {
 
-            return item.id === id;
+                return item.id === id;
 
-        });
+            }
+        );
 
 
-    if (posicion !== -1) {
+    if (
+        posicion !== -1
+    ) {
 
-        bowl.splice(posicion, 1);
+        bowl.splice(
+            posicion,
+            1
+        );
 
 
         mostrarNotificacion(
+
             `${ingrediente.nombre} eliminado del bowl.`
+
         );
+
 
     } else {
 
         bowl.push({
 
-            id: ingrediente.id,
+            id:
+                ingrediente.id,
 
-            nombre: ingrediente.nombre,
+            nombre:
+                ingrediente.nombre,
 
-            categoria: ingrediente.categoria
+            categoria:
+                ingrediente.categoria
 
         });
 
 
         mostrarNotificacion(
+
             `${ingrediente.nombre} agregado al bowl.`
+
         );
 
     }
@@ -512,34 +766,49 @@ function seleccionarIngrediente(id) {
 
 
 // ============================================
-// SIGUIENTE CATEGORÍA
+// SIGUIENTE PASO
 // ============================================
 
 function siguientePaso() {
 
     const categoria =
-        CATEGORIAS[pasoActual];
+        CATEGORIAS[
+            pasoActual
+        ];
 
 
     const seleccionados =
-        bowl.filter(function (item) {
+        bowl.filter(
+            function (item) {
 
-            return item.categoria === categoria;
+                return (
+                    item.categoria ===
+                    categoria
+                );
 
-        });
+            }
+        );
 
 
-    if (seleccionados.length === 0) {
+    if (
+        seleccionados.length === 0
+    ) {
 
         mostrarNotificacion(
+
             `Debes seleccionar al menos un ingrediente de ${categoria}.`
+
         );
 
         return;
+
     }
 
 
-    if (pasoActual < CATEGORIAS.length - 1) {
+    if (
+        pasoActual <
+        CATEGORIAS.length - 1
+    ) {
 
         pasoActual++;
 
@@ -551,12 +820,14 @@ function siguientePaso() {
 
 
 // ============================================
-// CATEGORÍA ANTERIOR
+// PASO ANTERIOR
 // ============================================
 
 function anteriorPaso() {
 
-    if (pasoActual > 0) {
+    if (
+        pasoActual > 0
+    ) {
 
         pasoActual--;
 
@@ -568,22 +839,27 @@ function anteriorPaso() {
 
 
 // ============================================
-// ACTUALIZAR BOTONES
+// BOTONES
 // ============================================
 
 function actualizarBotones() {
 
     const anterior =
-        document.getElementById("btn-anterior");
+        document.getElementById(
+            "btn-anterior"
+        );
 
 
     const siguiente =
-        document.getElementById("btn-siguiente");
+        document.getElementById(
+            "btn-siguiente"
+        );
 
 
     if (anterior) {
 
         anterior.style.display =
+
             pasoActual === 0
                 ? "none"
                 : "block";
@@ -594,8 +870,12 @@ function actualizarBotones() {
     if (siguiente) {
 
         siguiente.style.display =
-            pasoActual === CATEGORIAS.length - 1
+
+            pasoActual ===
+            CATEGORIAS.length - 1
+
                 ? "none"
+
                 : "block";
 
     }
@@ -604,21 +884,27 @@ function actualizarBotones() {
 
 
 // ============================================
-// RESUMEN DEL BOWL
+// RESUMEN
 // ============================================
 
 function renderizarResumen() {
 
     const resumen =
-        document.getElementById("resumen-bowl");
+        document.getElementById(
+            "resumen-bowl"
+        );
 
 
     const cantidad =
-        document.getElementById("cantidad-seleccionados");
+        document.getElementById(
+            "cantidad-seleccionados"
+        );
 
 
     if (!resumen) {
+
         return;
+
     }
 
 
@@ -630,76 +916,109 @@ function renderizarResumen() {
     }
 
 
-    if (bowl.length === 0) {
+    if (
+        bowl.length === 0
+    ) {
 
         resumen.innerHTML =
             '<p class="vacio">Todavía no has seleccionado ingredientes.</p>';
 
         return;
+
     }
 
 
     resumen.innerHTML = "";
 
 
-    CATEGORIAS.forEach(function (categoria) {
+    CATEGORIAS.forEach(
+        function (categoria) {
 
-        const ingredientes =
-            bowl.filter(function (item) {
+            const ingredientes =
+                bowl.filter(
+                    function (item) {
 
-                return item.categoria === categoria;
+                        return (
+                            item.categoria ===
+                            categoria
+                        );
 
-            });
+                    }
+                );
 
 
-        if (ingredientes.length === 0) {
-            return;
+            if (
+                ingredientes.length === 0
+            ) {
+
+                return;
+
+            }
+
+
+            const bloque =
+                document.createElement(
+                    "div"
+                );
+
+
+            bloque.className =
+                "resumen-categoria";
+
+
+            const titulo =
+                document.createElement(
+                    "h4"
+                );
+
+
+            titulo.textContent =
+                categoria;
+
+
+            bloque.appendChild(
+                titulo
+            );
+
+
+            const lista =
+                document.createElement(
+                    "ul"
+                );
+
+
+            ingredientes.forEach(
+                function (ingrediente) {
+
+                    const li =
+                        document.createElement(
+                            "li"
+                        );
+
+
+                    li.textContent =
+                        ingrediente.nombre;
+
+
+                    lista.appendChild(
+                        li
+                    );
+
+                }
+            );
+
+
+            bloque.appendChild(
+                lista
+            );
+
+
+            resumen.appendChild(
+                bloque
+            );
+
         }
-
-
-        const bloque =
-            document.createElement("div");
-
-
-        bloque.className =
-            "resumen-categoria";
-
-
-        const titulo =
-            document.createElement("h4");
-
-
-        titulo.textContent =
-            categoria;
-
-
-        bloque.appendChild(titulo);
-
-
-        const lista =
-            document.createElement("ul");
-
-
-        ingredientes.forEach(function (ingrediente) {
-
-            const li =
-                document.createElement("li");
-
-
-            li.textContent =
-                ingrediente.nombre;
-
-
-            lista.appendChild(li);
-
-        });
-
-
-        bloque.appendChild(lista);
-
-        resumen.appendChild(bloque);
-
-    });
+    );
 
 }
 
@@ -710,88 +1029,155 @@ function renderizarResumen() {
 
 function confirmarBowl() {
 
-    if (bowl.length === 0) {
+    if (
+        bowl.length === 0
+    ) {
 
         mostrarNotificacion(
+
             "Debes seleccionar ingredientes antes de confirmar."
+
         );
 
         return;
+
     }
 
 
     const faltantes =
-        CATEGORIAS.filter(function (categoria) {
+        CATEGORIAS.filter(
+            function (categoria) {
 
-            return !bowl.some(function (item) {
+                return !bowl.some(
+                    function (item) {
 
-                return item.categoria === categoria;
+                        return (
+                            item.categoria ===
+                            categoria
+                        );
 
-            });
+                    }
+                );
 
-        });
+            }
+        );
 
 
-    if (faltantes.length > 0) {
+    if (
+        faltantes.length > 0
+    ) {
 
         mostrarNotificacion(
+
             "Faltan categorías: " +
             faltantes.join(", ")
+
         );
 
         return;
+
     }
 
 
-    // Verificar stock antes de descontar
+    // VERIFICAR STOCK
 
-    for (const item of bowl) {
+    for (
+        const item of bowl
+    ) {
 
         const ingrediente =
-            inventario.find(function (elemento) {
+            inventario.find(
+                function (elemento) {
 
-                return elemento.id === item.id;
+                    return (
+                        elemento.id ===
+                        item.id
+                    );
 
-            });
+                }
+            );
 
 
-        if (!ingrediente || ingrediente.stock <= 0) {
+        if (
+            !ingrediente ||
+            ingrediente.stock <= 0
+        ) {
 
             mostrarNotificacion(
+
                 `No hay stock suficiente de ${item.nombre}.`
+
             );
 
             return;
+
         }
 
     }
 
 
-    // Descontar una unidad de cada ingrediente
+    // DESCONTAR
 
-    bowl.forEach(function (item) {
+    bowl.forEach(
+        function (item) {
 
-        const ingrediente =
-            inventario.find(function (elemento) {
+            const ingrediente =
+                inventario.find(
+                    function (elemento) {
 
-                return elemento.id === item.id;
+                        return (
+                            elemento.id ===
+                            item.id
+                        );
 
-            });
+                    }
+                );
 
 
-        if (ingrediente) {
+            if (ingrediente) {
 
-            ingrediente.stock--;
+                const anterior =
+                    ingrediente.stock;
+
+
+                ingrediente.stock--;
+
+
+                movimientosStock.unshift({
+
+                    fecha:
+                        new Date()
+                        .toLocaleString(
+                            "es-CL"
+                        ),
+
+                    ingrediente:
+                        ingrediente.nombre,
+
+                    cantidad:
+                        1,
+
+                    anterior:
+                        anterior,
+
+                    nuevo:
+                        ingrediente.stock,
+
+                    tipo:
+                        "Salida por Bowl"
+
+                });
+
+            }
 
         }
-
-    });
+    );
 
 
     guardarInventario();
 
+    guardarMovimientos();
 
-    // Limpiar bowl
 
     bowl = [];
 
@@ -802,7 +1188,9 @@ function confirmarBowl() {
 
 
     mostrarNotificacion(
+
         "✅ Bowl confirmado. Stock actualizado."
+
     );
 
 }
@@ -836,11 +1224,15 @@ function limpiarBowl() {
 function renderizarInventario() {
 
     const tabla =
-        document.getElementById("tabla-inventario");
+        document.getElementById(
+            "tabla-inventario"
+        );
 
 
     if (!tabla) {
+
         return;
+
     }
 
 
@@ -852,76 +1244,106 @@ function renderizarInventario() {
     let stockBajo = 0;
 
 
-    inventario.forEach(function (ingrediente) {
+    inventario.forEach(
+        function (ingrediente) {
 
-        const stock =
-            Number(ingrediente.stock) || 0;
+            const stock =
+                Number(
+                    ingrediente.stock
+                ) || 0;
 
 
-        totalStock += stock;
+            totalStock += stock;
 
 
-        if (stock <= 5) {
+            if (
+                stock <= 5
+            ) {
 
-            stockBajo++;
+                stockBajo++;
+
+            }
+
+
+            let clase = "";
+
+            let estado = "";
+
+
+            if (
+                stock === 0
+            ) {
+
+                clase =
+                    "stock-agotado";
+
+                estado =
+                    "Agotado";
+
+
+            } else if (
+                stock <= 5
+            ) {
+
+                clase =
+                    "stock-bajo";
+
+                estado =
+                    "Stock bajo";
+
+
+            } else {
+
+                clase =
+                    "stock-ok";
+
+                estado =
+                    "Disponible";
+
+            }
+
+
+            const fila =
+                document.createElement(
+                    "tr"
+                );
+
+
+            fila.innerHTML = `
+
+                <td>
+                    ${ingrediente.id}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        ingrediente.nombre
+                    )}
+                </td>
+
+                <td>
+                    ${escapeHTML(
+                        ingrediente.categoria
+                    )}
+                </td>
+
+                <td>
+                    ${stock}
+                </td>
+
+                <td class="${clase}">
+                    ${estado}
+                </td>
+
+            `;
+
+
+            tabla.appendChild(
+                fila
+            );
 
         }
-
-
-        let clase = "";
-
-        let estado = "";
-
-
-        if (stock === 0) {
-
-            clase = "stock-agotado";
-
-            estado = "Agotado";
-
-        } else if (stock <= 5) {
-
-            clase = "stock-bajo";
-
-            estado = "Stock bajo";
-
-        } else {
-
-            clase = "stock-ok";
-
-            estado = "Disponible";
-
-        }
-
-
-        const fila =
-            document.createElement("tr");
-
-
-        fila.innerHTML = `
-            <td>${ingrediente.id}</td>
-
-            <td>
-                ${escapeHTML(ingrediente.nombre)}
-            </td>
-
-            <td>
-                ${escapeHTML(ingrediente.categoria)}
-            </td>
-
-            <td>
-                ${stock}
-            </td>
-
-            <td class="${clase}">
-                ${estado}
-            </td>
-        `;
-
-
-        tabla.appendChild(fila);
-
-    });
+    );
 
 
     const totalIngredientes =
@@ -942,7 +1364,9 @@ function renderizarInventario() {
         );
 
 
-    if (totalIngredientes) {
+    if (
+        totalIngredientes
+    ) {
 
         totalIngredientes.textContent =
             inventario.length;
@@ -950,7 +1374,9 @@ function renderizarInventario() {
     }
 
 
-    if (totalStockElemento) {
+    if (
+        totalStockElemento
+    ) {
 
         totalStockElemento.textContent =
             totalStock;
@@ -958,7 +1384,9 @@ function renderizarInventario() {
     }
 
 
-    if (stockBajoElemento) {
+    if (
+        stockBajoElemento
+    ) {
 
         stockBajoElemento.textContent =
             stockBajo;
@@ -1019,7 +1447,9 @@ function agregarIngrediente(evento) {
 
 
     const stock =
-        Number(stockInput.value);
+        Number(
+            stockInput.value
+        );
 
 
     if (!nombre) {
@@ -1029,6 +1459,7 @@ function agregarIngrediente(evento) {
         );
 
         return;
+
     }
 
 
@@ -1039,26 +1470,38 @@ function agregarIngrediente(evento) {
         );
 
         return;
+
     }
 
 
-    if (isNaN(stock) || stock < 0) {
+    if (
+        isNaN(stock) ||
+        stock < 0
+    ) {
 
         mostrarNotificacion(
             "El stock no puede ser negativo."
         );
 
         return;
+
     }
 
 
     const existe =
-        inventario.some(function (ingrediente) {
+        inventario.some(
+            function (ingrediente) {
 
-            return ingrediente.nombre.toLowerCase() ===
-                nombre.toLowerCase();
+                return (
 
-        });
+                    ingrediente.nombre
+                        .toLowerCase() ===
+                    nombre.toLowerCase()
+
+                );
+
+            }
+        );
 
 
     if (existe) {
@@ -1068,28 +1511,40 @@ function agregarIngrediente(evento) {
         );
 
         return;
+
     }
 
 
     const nuevoId =
+
         inventario.length > 0
+
             ? Math.max(
-                ...inventario.map(function (item) {
-                    return item.id;
-                })
+                ...inventario.map(
+                    function (item) {
+
+                        return item.id;
+
+                    }
+                )
             ) + 1
+
             : 1;
 
 
     inventario.push({
 
-        id: nuevoId,
+        id:
+            nuevoId,
 
-        nombre: nombre,
+        nombre:
+            nombre,
 
-        categoria: categoria,
+        categoria:
+            categoria,
 
-        stock: stock
+        stock:
+            stock
 
     });
 
@@ -1108,14 +1563,16 @@ function agregarIngrediente(evento) {
 
 
     mostrarNotificacion(
+
         `✅ ${nombre} agregado correctamente.`
+
     );
 
 }
 
 
 // ============================================
-// SELECTOR PARA AGREGAR STOCK
+// SELECTOR DE STOCK
 // ============================================
 
 function renderizarSelectorStock() {
@@ -1127,31 +1584,139 @@ function renderizarSelectorStock() {
 
 
     if (!selector) {
+
         return;
+
     }
 
 
+    const valorAnterior =
+        selector.value;
+
+
     selector.innerHTML =
+
         '<option value="">Seleccionar ingrediente</option>';
 
 
-    inventario.forEach(function (ingrediente) {
+    inventario.forEach(
+        function (ingrediente) {
 
-        const option =
-            document.createElement("option");
-
-
-        option.value =
-            ingrediente.id;
-
-
-        option.textContent =
-            `${ingrediente.nombre} — Stock actual: ${ingrediente.stock}`;
+            const option =
+                document.createElement(
+                    "option"
+                );
 
 
-        selector.appendChild(option);
+            option.value =
+                ingrediente.id;
 
-    });
+
+            option.textContent =
+
+                `${ingrediente.nombre} — Stock actual: ${ingrediente.stock}`;
+
+
+            selector.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if (
+        inventario.some(
+            function (item) {
+
+                return (
+                    item.id ===
+                    Number(valorAnterior)
+                );
+
+            }
+        )
+    ) {
+
+        selector.value =
+            valorAnterior;
+
+    }
+
+
+    selector.onchange =
+        actualizarStockActual;
+
+}
+
+
+// ============================================
+// MOSTRAR STOCK ACTUAL
+// ============================================
+
+function actualizarStockActual() {
+
+    const selector =
+        document.getElementById(
+            "stock-ingrediente"
+        );
+
+
+    const contenedor =
+        document.getElementById(
+            "stock-actual"
+        );
+
+
+    if (
+        !selector ||
+        !contenedor
+    ) {
+
+        return;
+
+    }
+
+
+    const id =
+        Number(
+            selector.value
+        );
+
+
+    if (!id) {
+
+        contenedor.textContent =
+            "Selecciona un ingrediente";
+
+        return;
+
+    }
+
+
+    const ingrediente =
+        inventario.find(
+            function (item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!ingrediente) {
+
+        contenedor.textContent =
+            "Ingrediente no encontrado";
+
+        return;
+
+    }
+
+
+    contenedor.textContent =
+
+        `Stock actual: ${ingrediente.stock} unidades`;
 
 }
 
@@ -1174,7 +1739,10 @@ function agregarStock() {
         );
 
 
-    if (!selector || !cantidadInput) {
+    if (
+        !selector ||
+        !cantidadInput
+    ) {
 
         return;
 
@@ -1182,11 +1750,15 @@ function agregarStock() {
 
 
     const id =
-        Number(selector.value);
+        Number(
+            selector.value
+        );
 
 
     const cantidad =
-        Number(cantidadInput.value);
+        Number(
+            cantidadInput.value
+        );
 
 
     if (!id) {
@@ -1196,25 +1768,32 @@ function agregarStock() {
         );
 
         return;
+
     }
 
 
-    if (!cantidad || cantidad <= 0) {
+    if (
+        !cantidad ||
+        cantidad <= 0
+    ) {
 
         mostrarNotificacion(
             "La cantidad debe ser mayor a 0."
         );
 
         return;
+
     }
 
 
     const ingrediente =
-        inventario.find(function (item) {
+        inventario.find(
+            function (item) {
 
-            return item.id === id;
+                return item.id === id;
 
-        });
+            }
+        );
 
 
     if (!ingrediente) {
@@ -1224,26 +1803,27 @@ function agregarStock() {
         );
 
         return;
+
     }
 
 
     const stockAnterior =
-        Number(ingrediente.stock) || 0;
+        Number(
+            ingrediente.stock
+        ) || 0;
 
 
     ingrediente.stock =
         stockAnterior + cantidad;
 
 
-    guardarInventario();
-
-
-    // Guardar movimiento
-
     movimientosStock.unshift({
 
         fecha:
-            new Date().toLocaleString("es-CL"),
+            new Date()
+            .toLocaleString(
+                "es-CL"
+            ),
 
         ingrediente:
             ingrediente.nombre,
@@ -1255,44 +1835,237 @@ function agregarStock() {
             stockAnterior,
 
         nuevo:
-            ingrediente.stock
+            ingrediente.stock,
+
+        tipo:
+            "Entrada"
 
     });
 
 
-    // Máximo 10 movimientos
-
-    if (movimientosStock.length > 10) {
+    if (
+        movimientosStock.length > 20
+    ) {
 
         movimientosStock =
-            movimientosStock.slice(0, 10);
+            movimientosStock.slice(
+                0,
+                20
+            );
 
     }
 
 
-    renderizarSelectorStock();
+    guardarInventario();
+
+    guardarMovimientos();
+
 
     renderizarInventario();
 
     renderizarBowl();
 
+    renderizarSelectorStock();
+
     renderizarMovimientosStock();
+
+    actualizarStockActual();
 
 
     cantidadInput.value = "1";
 
-    selector.value = "";
-
 
     mostrarNotificacion(
+
         `✅ Se agregaron ${cantidad} unidades de ${ingrediente.nombre}. Stock actual: ${ingrediente.stock}`
+
     );
 
 }
 
 
 // ============================================
-// MOSTRAR MOVIMIENTOS DE STOCK
+// QUITAR STOCK
+// ============================================
+
+function quitarStock() {
+
+    const selector =
+        document.getElementById(
+            "stock-ingrediente"
+        );
+
+
+    const cantidadInput =
+        document.getElementById(
+            "cantidad-stock"
+        );
+
+
+    if (
+        !selector ||
+        !cantidadInput
+    ) {
+
+        return;
+
+    }
+
+
+    const id =
+        Number(
+            selector.value
+        );
+
+
+    const cantidad =
+        Number(
+            cantidadInput.value
+        );
+
+
+    if (!id) {
+
+        mostrarNotificacion(
+            "Selecciona un ingrediente."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        !cantidad ||
+        cantidad <= 0
+    ) {
+
+        mostrarNotificacion(
+            "La cantidad debe ser mayor a 0."
+        );
+
+        return;
+
+    }
+
+
+    const ingrediente =
+        inventario.find(
+            function (item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (!ingrediente) {
+
+        mostrarNotificacion(
+            "Ingrediente no encontrado."
+        );
+
+        return;
+
+    }
+
+
+    const stockAnterior =
+        Number(
+            ingrediente.stock
+        ) || 0;
+
+
+    // NO PERMITIR STOCK NEGATIVO
+
+    if (
+        cantidad > stockAnterior
+    ) {
+
+        mostrarNotificacion(
+
+            `❌ No puedes quitar ${cantidad} unidades. Solo hay ${stockAnterior} disponibles.`
+
+        );
+
+        return;
+
+    }
+
+
+    ingrediente.stock =
+        stockAnterior - cantidad;
+
+
+    movimientosStock.unshift({
+
+        fecha:
+            new Date()
+            .toLocaleString(
+                "es-CL"
+            ),
+
+        ingrediente:
+            ingrediente.nombre,
+
+        cantidad:
+            cantidad,
+
+        anterior:
+            stockAnterior,
+
+        nuevo:
+            ingrediente.stock,
+
+        tipo:
+            "Salida manual"
+
+    });
+
+
+    if (
+        movimientosStock.length > 20
+    ) {
+
+        movimientosStock =
+            movimientosStock.slice(
+                0,
+                20
+            );
+
+    }
+
+
+    guardarInventario();
+
+    guardarMovimientos();
+
+
+    renderizarInventario();
+
+    renderizarBowl();
+
+    renderizarSelectorStock();
+
+    renderizarMovimientosStock();
+
+    actualizarStockActual();
+
+
+    cantidadInput.value = "1";
+
+
+    mostrarNotificacion(
+
+        `➖ Se quitaron ${cantidad} unidades de ${ingrediente.nombre}. Stock actual: ${ingrediente.stock}`
+
+    );
+
+}
+
+
+// ============================================
+// HISTORIAL
 // ============================================
 
 function renderizarMovimientosStock() {
@@ -1304,65 +2077,134 @@ function renderizarMovimientosStock() {
 
 
     if (!contenedor) {
+
         return;
+
     }
 
 
-    if (movimientosStock.length === 0) {
+    if (
+        movimientosStock.length === 0
+    ) {
 
         contenedor.innerHTML =
+
             '<p class="vacio">No hay movimientos todavía.</p>';
 
         return;
+
     }
 
 
     contenedor.innerHTML = "";
 
 
-    movimientosStock.forEach(function (movimiento) {
+    movimientosStock.forEach(
+        function (movimiento) {
 
-        const div =
-            document.createElement("div");
-
-
-        div.className =
-            "movimiento";
-
-
-        div.innerHTML = `
-            <strong>
-                ${escapeHTML(movimiento.ingrediente)}
-            </strong>
-
-            <br>
-
-            Se agregaron
-            <strong>
-                ${movimiento.cantidad}
-            </strong>
-            unidades.
-
-            <br>
-
-            Stock:
-            ${movimiento.anterior}
-            →
-            <strong>
-                ${movimiento.nuevo}
-            </strong>
-
-            <br>
-
-            <small>
-                ${movimiento.fecha}
-            </small>
-        `;
+            const div =
+                document.createElement(
+                    "div"
+                );
 
 
-        contenedor.appendChild(div);
+            div.className =
+                "movimiento";
 
-    });
+
+            let texto = "";
+
+            let simbolo = "";
+
+
+            if (
+                movimiento.tipo ===
+                "Entrada"
+            ) {
+
+                texto =
+                    "Se agregaron";
+
+                simbolo =
+                    "➕";
+
+
+            } else if (
+                movimiento.tipo ===
+                "Salida manual"
+            ) {
+
+                texto =
+                    "Se quitaron";
+
+                simbolo =
+                    "➖";
+
+
+            } else {
+
+                texto =
+                    "Se descontaron";
+
+                simbolo =
+                    "🥣";
+
+            }
+
+
+            div.innerHTML = `
+
+                <strong>
+
+                    ${simbolo}
+
+                    ${escapeHTML(
+                        movimiento.ingrediente
+                    )}
+
+                </strong>
+
+                <br>
+
+                ${texto}
+
+                <strong>
+                    ${movimiento.cantidad}
+                </strong>
+
+                unidades.
+
+                <br>
+
+                Stock:
+
+                ${movimiento.anterior}
+
+                →
+
+                <strong>
+                    ${movimiento.nuevo}
+                </strong>
+
+                <br>
+
+                <small>
+
+                    ${escapeHTML(
+                        movimiento.fecha
+                    )}
+
+                </small>
+
+            `;
+
+
+            contenedor.appendChild(
+                div
+            );
+
+        }
+    );
 
 }
 
@@ -1371,7 +2213,9 @@ function renderizarMovimientosStock() {
 // NOTIFICACIONES
 // ============================================
 
-function mostrarNotificacion(mensaje) {
+function mostrarNotificacion(
+    mensaje
+) {
 
     const notificacion =
         document.getElementById(
@@ -1380,11 +2224,15 @@ function mostrarNotificacion(mensaje) {
 
 
     if (!notificacion) {
+
         return;
+
     }
 
 
-    clearTimeout(timeoutNotificacion);
+    clearTimeout(
+        timeoutNotificacion
+    );
 
 
     notificacion.textContent =
@@ -1397,73 +2245,98 @@ function mostrarNotificacion(mensaje) {
 
 
     timeoutNotificacion =
-        setTimeout(function () {
+        setTimeout(
+            function () {
 
-            notificacion.classList.remove(
-                "mostrar"
-            );
+                notificacion.classList.remove(
+                    "mostrar"
+                );
 
-        }, 3000);
+            },
+            3000
+        );
 
 }
 
 
 // ============================================
-// PROTEGER TEXTO HTML
+// PROTEGER HTML
 // ============================================
 
 function escapeHTML(texto) {
 
     return String(texto).replace(
+
         /[&<>"']/g,
+
         function (caracter) {
 
             return {
 
-                "&": "&amp;",
+                "&":
+                    "&amp;",
 
-                "<": "&lt;",
+                "<":
+                    "&lt;",
 
-                ">": "&gt;",
+                ">":
+                    "&gt;",
 
-                '"': "&quot;",
+                '"':
+                    "&quot;",
 
-                "'": "&#039;"
+                "'":
+                    "&#039;"
 
             }[caracter];
 
         }
+
     );
 
 }
 
 
 // ============================================
-// SERVICE WORKER / PWA
+// SERVICE WORKER
 // ============================================
 
 function registrarServiceWorker() {
 
-    if ("serviceWorker" in navigator) {
+    if (
+        "serviceWorker" in navigator
+    ) {
 
-        navigator.serviceWorker.register("./sw.js")
+        navigator.serviceWorker
+            .register(
+                "./sw.js"
+            )
 
-            .then(function () {
+            .then(
+                function () {
 
-                console.log(
-                    "Service Worker registrado correctamente."
-                );
+                    console.log(
 
-            })
+                        "Service Worker registrado correctamente."
 
-            .catch(function (error) {
+                    );
 
-                console.error(
-                    "Error al registrar Service Worker:",
-                    error
-                );
+                }
+            )
 
-            });
+            .catch(
+                function (error) {
+
+                    console.error(
+
+                        "Error al registrar Service Worker:",
+
+                        error
+
+                    );
+
+                }
+            );
 
     }
 
