@@ -483,3 +483,111 @@ form button,
         width: 100%;
     }
 }
+/* ========================= */
+/* GESTIÓN DE STOCK */
+/* ========================= */
+
+.botones-stock {
+
+    display: flex;
+
+    gap: 10px;
+
+    margin-top: 20px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.botones-stock button {
+
+    flex: 1;
+
+    min-width: 180px;
+
+    border: none;
+
+    padding: 14px 20px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+    transition: 0.2s;
+
+}
+
+
+.btn-agregar-stock {
+
+    background: #2e7d32;
+
+    color: white;
+
+}
+
+
+.btn-agregar-stock:hover {
+
+    background: #1b5e20;
+
+}
+
+
+.btn-quitar-stock {
+
+    background: #c62828;
+
+    color: white;
+
+}
+
+
+.btn-quitar-stock:hover {
+
+    background: #8e0000;
+
+}
+
+
+.stock-actual {
+
+    margin-top: 20px;
+
+    padding: 15px;
+
+    background: #f4f6f8;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    text-align: center;
+
+}
+
+
+/* ========================= */
+/* RESPONSIVE STOCK */
+/* ========================= */
+
+@media (max-width: 600px) {
+
+    .botones-stock {
+
+        flex-direction: column;
+
+    }
+
+    .botones-stock button {
+
+        width: 100%;
+
+    }
+
+}
