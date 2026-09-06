@@ -1,0 +1,522 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Vita Cañete - Gestión de Inventario</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- PWA -->
+    <link rel="manifest" href="./manifest.json">
+    <meta name="theme-color" content="#2e7d32">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+<body>
+
+    <!-- ENCABEZADO -->
+    <header>
+        <h1>🥗 Vita Cañete</h1>
+        <p>Sistema de pedidos e inventario</p>
+    </header>
+
+
+    <!-- MENÚ PRINCIPAL -->
+    <nav>
+        <button onclick="mostrarSeccion('crear-bowl')">
+            🥗 Crear Bowl
+        </button>
+
+        <button onclick="mostrarSeccion('inventario')">
+            📦 Inventario
+        </button>
+
+        <button onclick="mostrarSeccion('agregar-ingrediente')">
+            ➕ Agregar Ingrediente
+        </button>
+
+        <button onclick="mostrarSeccion('agregar-stock')">
+            📥 Agregar Stock
+        </button>
+    </nav>
+
+
+    <main>
+
+        <!-- ================================= -->
+        <!-- CREAR BOWL -->
+        <!-- ================================= -->
+
+        <section id="crear-bowl" class="seccion activa">
+
+            <div class="titulo-seccion">
+
+                <h2>🥗 Crear Bowl Personalizado</h2>
+
+                <p>
+                    Selecciona los ingredientes categoría por categoría.
+                </p>
+
+            </div>
+
+
+            <!-- PROGRESO DE CATEGORÍAS -->
+
+            <div id="progreso" class="progreso"></div>
+
+
+            <!-- CATEGORÍA ACTUAL -->
+
+            <div id="categorias-bowl"></div>
+
+
+            <!-- BOTONES ATRÁS / SIGUIENTE -->
+
+            <div class="navegacion-pasos">
+
+                <button
+                    id="btn-anterior"
+                    class="btn-secundario"
+                    onclick="anteriorPaso()">
+
+                    ← Atrás
+
+                </button>
+
+
+                <button
+                    id="btn-siguiente"
+                    class="btn-principal"
+                    onclick="siguientePaso()">
+
+                    Siguiente →
+
+                </button>
+
+            </div>
+
+
+            <!-- RESUMEN DEL BOWL -->
+
+            <div class="resumen">
+
+                <h3>📋 Resumen del Bowl</h3>
+
+                <div id="resumen-bowl">
+
+                    <p class="vacio">
+                        Todavía no has seleccionado ingredientes.
+                    </p>
+
+                </div>
+
+
+                <p>
+
+                    <strong>
+                        Ingredientes seleccionados:
+                    </strong>
+
+                    <span id="cantidad-seleccionados">
+                        0
+                    </span>
+
+                </p>
+
+
+                <!-- ACCIONES -->
+
+                <div class="acciones">
+
+                    <button
+                        id="confirmar-btn"
+                        class="btn-confirmar"
+                        onclick="confirmarBowl()">
+
+                        ✅ Confirmar Bowl
+
+                    </button>
+
+
+                    <button
+                        id="limpiar-btn"
+                        class="btn-peligro"
+                        onclick="limpiarBowl()">
+
+                        🗑️ Limpiar
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- INVENTARIO -->
+        <!-- ================================= -->
+
+        <section id="inventario" class="seccion">
+
+            <div class="titulo-seccion">
+
+                <h2>📦 Inventario</h2>
+
+                <p>
+                    Consulta el stock actual de los ingredientes.
+                </p>
+
+            </div>
+
+
+            <!-- ESTADÍSTICAS -->
+
+            <div class="estadisticas">
+
+                <div class="estadistica">
+
+                    <h3 id="total-ingredientes">
+                        0
+                    </h3>
+
+                    <p>
+                        Ingredientes
+                    </p>
+
+                </div>
+
+
+                <div class="estadistica">
+
+                    <h3 id="total-stock">
+                        0
+                    </h3>
+
+                    <p>
+                        Stock Total
+                    </p>
+
+                </div>
+
+
+                <div class="estadistica">
+
+                    <h3 id="stock-bajo">
+                        0
+                    </h3>
+
+                    <p>
+                        Stock Bajo
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- TABLA INVENTARIO -->
+
+            <div class="tabla-contenedor">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>ID</th>
+
+                            <th>Ingrediente</th>
+
+                            <th>Categoría</th>
+
+                            <th>Stock</th>
+
+                            <th>Estado</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="tabla-inventario">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- AGREGAR INGREDIENTE -->
+        <!-- ================================= -->
+
+        <section
+            id="agregar-ingrediente"
+            class="seccion">
+
+            <div class="titulo-seccion">
+
+                <h2>
+                    ➕ Agregar Ingrediente
+                </h2>
+
+                <p>
+                    Agrega un nuevo ingrediente al inventario.
+                </p>
+
+            </div>
+
+
+            <form
+                id="form-ingrediente"
+                onsubmit="agregarIngrediente(event)">
+
+                <!-- NOMBRE -->
+
+                <label for="nombre-ingrediente">
+
+                    Nombre del ingrediente
+
+                </label>
+
+
+                <input
+                    type="text"
+                    id="nombre-ingrediente"
+                    placeholder="Ej: Pepino"
+                    required
+                >
+
+
+                <!-- CATEGORÍA -->
+
+                <label for="categoria-ingrediente">
+
+                    Categoría
+
+                </label>
+
+
+                <select
+                    id="categoria-ingrediente"
+                    required>
+
+                    <option value="">
+
+                        Seleccionar categoría
+
+                    </option>
+
+                    <option value="Carnes">
+
+                        Carnes
+
+                    </option>
+
+                    <option value="Vegetales">
+
+                        Vegetales
+
+                    </option>
+
+                    <option value="Carbohidratos">
+
+                        Carbohidratos
+
+                    </option>
+
+                    <option value="Otros">
+
+                        Otros
+
+                    </option>
+
+                    <option value="Aderezos">
+
+                        Aderezos
+
+                    </option>
+
+                </select>
+
+
+                <!-- STOCK INICIAL -->
+
+                <label for="stock-inicial">
+
+                    Stock inicial
+
+                </label>
+
+
+                <input
+                    type="number"
+                    id="stock-inicial"
+                    min="0"
+                    value="0"
+                    required
+                >
+
+
+                <!-- BOTÓN -->
+
+                <button
+                    type="submit"
+                    class="btn-principal">
+
+                    ➕ Agregar Ingrediente
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- ================================= -->
+        <!-- AGREGAR STOCK -->
+        <!-- ================================= -->
+
+        <section
+            id="agregar-stock"
+            class="seccion">
+
+            <div class="titulo-seccion">
+
+                <h2>
+                    📥 Agregar Stock
+                </h2>
+
+                <p>
+                    Puedes agregar stock varias veces sin salir
+                    de esta sección.
+                </p>
+
+            </div>
+
+
+            <div class="form-stock">
+
+                <!-- INGREDIENTE -->
+
+                <label for="stock-ingrediente">
+
+                    Ingrediente
+
+                </label>
+
+
+                <select id="stock-ingrediente">
+
+                    <option value="">
+
+                        Seleccionar ingrediente
+
+                    </option>
+
+                </select>
+
+
+                <!-- CANTIDAD -->
+
+                <label for="cantidad-stock">
+
+                    Cantidad a agregar
+
+                </label>
+
+
+                <input
+                    type="number"
+                    id="cantidad-stock"
+                    min="1"
+                    value="1"
+                >
+
+
+                <!-- AGREGAR STOCK -->
+
+                <button
+                    id="agregar-stock-btn"
+                    class="btn-principal"
+                    onclick="agregarStock()">
+
+                    📥 Agregar Stock
+
+                </button>
+
+
+                <!-- SALIR -->
+
+                <button
+                    id="salir-stock-btn"
+                    class="btn-secundario"
+                    onclick="mostrarSeccion('crear-bowl')">
+
+                    🚪 Salir
+
+                </button>
+
+            </div>
+
+
+
+            <!-- HISTORIAL -->
+
+            <div class="historial-stock">
+
+                <h3>
+                    📋 Últimos movimientos
+                </h3>
+
+
+                <div id="lista-movimientos">
+
+                    <p class="vacio">
+
+                        No hay movimientos todavía.
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- ================================= -->
+    <!-- NOTIFICACIONES -->
+    <!-- ================================= -->
+
+    <div id="notificacion"></div>
+
+
+
+    <!-- ================================= -->
+    <!-- JAVASCRIPT -->
+    <!-- ================================= -->
+
+    <script src="script.js"></script>
+
+
+</body>
+</html>
+```
