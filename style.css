@@ -1,722 +1,665 @@
-/* ============================================ */
-/* CONFIGURACIÓN GENERAL */
-/* ============================================ */
-
 * {
-
     margin: 0;
-
     padding: 0;
-
     box-sizing: border-box;
-
 }
-
 
 body {
-
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
     background: #f4f6f8;
-
     color: #333;
-
+    min-width: 320px;
 }
 
 
-/* ============================================ */
+/* ========================= */
 /* HEADER */
-/* ============================================ */
+/* ========================= */
 
 header {
-
     background: #2e7d32;
-
     color: white;
-
     text-align: center;
-
-    padding: 25px;
-
+    padding: 25px 15px;
 }
-
 
 header h1 {
-
     margin-bottom: 8px;
-
+    font-size: 28px;
 }
 
 
-
-/* ============================================ */
-/* NAVEGACIÓN */
-/* ============================================ */
+/* ========================= */
+/* NAV */
+/* ========================= */
 
 nav {
-
     display: flex;
-
     justify-content: center;
-
     gap: 10px;
-
     flex-wrap: wrap;
-
     background: white;
-
     padding: 15px;
-
-    box-shadow:
-        0 2px 5px rgba(0,0,0,0.1);
-
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
-
 
 nav button {
-
     border: none;
-
     background: #e8f5e9;
-
     color: #2e7d32;
-
     padding: 12px 18px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-weight: bold;
-
     transition: 0.2s;
-
+    font-size: 15px;
 }
-
 
 nav button:hover {
-
     background: #2e7d32;
-
     color: white;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* MAIN */
-/* ============================================ */
+/* ========================= */
 
 main {
-
     width: 90%;
-
     max-width: 1100px;
-
     margin: 30px auto;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* SECCIONES */
-/* ============================================ */
+/* ========================= */
 
 .seccion {
-
     display: none;
-
 }
-
 
 .seccion.activa {
-
     display: block;
-
 }
-
 
 .titulo-seccion {
-
     background: white;
-
     padding: 25px;
-
     border-radius: 12px;
-
     margin-bottom: 20px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 .titulo-seccion h2 {
-
     color: #2e7d32;
-
     margin-bottom: 8px;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* PROGRESO */
-/* ============================================ */
+/* ========================= */
 
 .progreso {
-
     display: flex;
-
     justify-content: space-between;
-
     gap: 5px;
-
     margin-bottom: 20px;
-
-    flex-wrap: wrap;
-
 }
-
 
 .progreso-item {
-
     flex: 1;
-
-    min-width: 100px;
-
     text-align: center;
-
     padding: 12px 8px;
-
     border-radius: 8px;
-
     background: #ddd;
-
     color: #666;
-
     font-size: 14px;
-
     font-weight: bold;
-
 }
-
 
 .progreso-item.activo {
-
     background: #2e7d32;
-
     color: white;
-
 }
-
 
 .progreso-item.completado {
-
     background: #81c784;
-
     color: white;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* INGREDIENTES */
-/* ============================================ */
+/* ========================= */
 
 .categoria-contenedor {
-
     background: white;
-
     padding: 25px;
-
     border-radius: 12px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 .categoria-contenedor h3 {
-
     color: #2e7d32;
-
     margin-bottom: 20px;
-
     font-size: 22px;
-
 }
-
 
 .ingredientes-grid {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(180px, 1fr)
-        );
-
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
     gap: 15px;
-
 }
-
 
 .ingrediente-card {
-
     border: 2px solid #ddd;
-
     border-radius: 10px;
-
     padding: 18px;
-
     cursor: pointer;
-
     transition: 0.2s;
-
     background: white;
-
+    min-height: 90px;
 }
-
 
 .ingrediente-card:hover {
-
     border-color: #2e7d32;
-
     transform: translateY(-2px);
-
 }
-
 
 .ingrediente-card.seleccionado {
-
     border-color: #2e7d32;
-
     background: #e8f5e9;
-
 }
-
 
 .ingrediente-card.sin-stock {
-
     opacity: 0.5;
-
     cursor: not-allowed;
-
 }
-
 
 .ingrediente-nombre {
-
     font-size: 18px;
-
     font-weight: bold;
-
     margin-bottom: 8px;
-
 }
-
 
 .ingrediente-stock {
-
     font-size: 14px;
-
     color: #666;
-
 }
 
 
-
-/* ============================================ */
-/* NAVEGACIÓN DE PASOS */
-/* ============================================ */
+/* ========================= */
+/* NAVEGACIÓN */
+/* ========================= */
 
 .navegacion-pasos {
-
     display: flex;
-
     justify-content: space-between;
-
     gap: 15px;
-
     margin: 20px 0;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* BOTONES */
-/* ============================================ */
+/* ========================= */
 
 button {
-
     font-family: inherit;
-
+    -webkit-tap-highlight-color: transparent;
 }
-
 
 .btn-principal,
 .btn-secundario,
 .btn-confirmar,
 .btn-peligro {
-
     border: none;
-
     padding: 13px 20px;
-
     border-radius: 8px;
-
     cursor: pointer;
-
     font-weight: bold;
-
     transition: 0.2s;
-
+    font-size: 15px;
+    min-height: 45px;
 }
-
 
 .btn-principal {
-
     background: #2e7d32;
-
     color: white;
-
 }
-
 
 .btn-principal:hover {
-
     background: #1b5e20;
-
 }
-
 
 .btn-secundario {
-
     background: #757575;
-
     color: white;
-
 }
-
 
 .btn-secundario:hover {
-
     background: #555;
-
 }
-
 
 .btn-confirmar {
-
     background: #1565c0;
-
     color: white;
-
 }
-
 
 .btn-confirmar:hover {
-
     background: #0d47a1;
-
 }
-
 
 .btn-peligro {
-
     background: #c62828;
-
     color: white;
-
 }
-
 
 .btn-peligro:hover {
-
     background: #8e0000;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* RESUMEN */
-/* ============================================ */
+/* ========================= */
 
 .resumen {
-
     background: white;
-
     padding: 25px;
-
     border-radius: 12px;
-
     margin-top: 20px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 .resumen h3 {
-
     color: #2e7d32;
-
     margin-bottom: 15px;
-
 }
-
 
 .resumen-categoria {
-
     margin-bottom: 15px;
-
 }
-
 
 .resumen-categoria h4 {
-
     margin-bottom: 5px;
-
     color: #555;
-
 }
-
 
 .resumen-categoria ul {
-
     padding-left: 20px;
-
 }
-
 
 .acciones {
-
     display: flex;
-
     gap: 10px;
-
     margin-top: 20px;
-
     flex-wrap: wrap;
-
 }
-
 
 .vacio {
-
     color: #888;
-
     font-style: italic;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* ESTADÍSTICAS */
-/* ============================================ */
+/* ========================= */
 
 .estadisticas {
-
     display: grid;
-
-    grid-template-columns:
-        repeat(
-            auto-fit,
-            minmax(200px, 1fr)
-        );
-
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px;
-
     margin-bottom: 20px;
-
 }
-
 
 .estadistica {
-
     background: white;
-
     padding: 25px;
-
     border-radius: 12px;
-
     text-align: center;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 .estadistica h3 {
-
     font-size: 32px;
-
     color: #2e7d32;
-
     margin-bottom: 8px;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* TABLA */
-/* ============================================ */
+/* ========================= */
 
 .tabla-contenedor {
-
     background: white;
-
     border-radius: 12px;
-
     overflow-x: auto;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 table {
-
     width: 100%;
-
     border-collapse: collapse;
-
+    min-width: 500px;
 }
-
 
 th,
 td {
-
     padding: 14px;
-
     text-align: left;
-
     border-bottom: 1px solid #ddd;
-
 }
-
 
 th {
-
     background: #2e7d32;
-
     color: white;
-
 }
-
 
 tr:hover {
-
     background: #f5f5f5;
-
 }
-
 
 .stock-ok {
-
     color: #2e7d32;
-
     font-weight: bold;
-
 }
-
 
 .stock-bajo {
-
     color: #f57c00;
-
     font-weight: bold;
-
 }
-
 
 .stock-agotado {
-
     color: #c62828;
-
     font-weight: bold;
-
 }
 
 
-
-/* ============================================ */
+/* ========================= */
 /* FORMULARIOS */
-/* ============================================ */
+/* ========================= */
 
 form,
 .form-stock {
-
     background: white;
-
     padding: 25px;
-
     border-radius: 12px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
-
 
 label {
-
     display: block;
-
     margin-top: 15px;
-
     margin-bottom: 7px;
-
     font-weight: bold;
-
 }
-
 
 input,
 select {
-
     width: 100%;
-
-    padding: 12px;
-
+    padding: 13px;
     border: 1px solid #ccc;
-
     border-radius: 7px;
-
     font-size: 16px;
-
+    min-height: 45px;
 }
 
-
-form button {
-
+form button,
+.form-stock button {
     margin-top: 20px;
-
 }
 
 
+/* ========================= */
+/* HISTORIAL */
+/* ========================= */
 
-/* ============================================ */
-/* BOTONES DE STOCK */
-/* ============================================ */
+.historial-stock {
+    margin-top: 20px;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.movimiento {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+.movimiento:last-child {
+    border-bottom: none;
+}
+
+
+/* ========================= */
+/* NOTIFICACIÓN */
+/* ========================= */
+
+#notificacion {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background: #333;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 8px;
+    display: none;
+    z-index: 1000;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+}
+
+#notificacion.mostrar {
+    display: block;
+}
+
+
+/* ========================= */
+/* CELULAR */
+/* ========================= */
+
+@media (max-width: 600px) {
+
+    body {
+        font-size: 15px;
+    }
+
+    header {
+        padding: 20px 12px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    nav button {
+        width: 100%;
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    main {
+        width: 94%;
+        margin: 20px auto;
+    }
+
+    .titulo-seccion {
+        padding: 20px;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 21px;
+    }
+
+    /* PROGRESO */
+
+    .progreso {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .progreso-item {
+        min-width: 0;
+        padding: 12px 6px;
+        font-size: 13px;
+    }
+
+    .progreso-item:last-child {
+        grid-column: span 2;
+    }
+
+    /* INGREDIENTES */
+
+    .categoria-contenedor {
+        padding: 18px;
+    }
+
+    .categoria-contenedor h3 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .ingredientes-grid {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .ingrediente-card {
+        padding: 16px;
+        min-height: 75px;
+    }
+
+    .ingrediente-nombre {
+        font-size: 17px;
+    }
+
+    /* BOTONES */
+
+    .navegacion-pasos {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .navegacion-pasos button {
+        width: 100%;
+        min-height: 50px;
+        font-size: 16px;
+    }
+
+    .acciones {
+        flex-direction: column;
+    }
+
+    .acciones button {
+        width: 100%;
+        min-height: 50px;
+    }
+
+    .btn-principal,
+    .btn-secundario,
+    .btn-confirmar,
+    .btn-peligro {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    /* ESTADÍSTICAS */
+
+    .estadisticas {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+    .estadistica {
+        padding: 20px;
+    }
+
+    .estadistica h3 {
+        font-size: 28px;
+    }
+
+    /* FORMULARIOS */
+
+    form,
+    .form-stock {
+        padding: 18px;
+    }
+
+    input,
+    select {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    form button,
+    .form-stock button {
+        width: 100%;
+        min-height: 48px;
+    }
+
+    /* HISTORIAL */
+
+    .historial-stock {
+        padding: 18px;
+    }
+
+    /* NOTIFICACIÓN */
+
+    #notificacion {
+        left: 15px;
+        right: 15px;
+        bottom: 15px;
+        text-align: center;
+    }
+}
+
+
+/* ========================= */
+/* CELULARES MUY PEQUEÑOS */
+/* ========================= */
+
+@media (max-width: 380px) {
+
+    header h1 {
+        font-size: 21px;
+    }
+
+    main {
+        width: 96%;
+    }
+
+    .titulo-seccion {
+        padding: 16px;
+    }
+
+    .categoria-contenedor {
+        padding: 14px;
+    }
+
+    .progreso-item {
+        font-size: 12px;
+    }
+
+    .ingrediente-card {
+        padding: 14px;
+    }
+}
+/* ========================= */
+/* GESTIÓN DE STOCK */
+/* ========================= */
 
 .botones-stock {
 
@@ -803,157 +746,11 @@ form button {
 }
 
 
-
-/* ============================================ */
-/* HISTORIAL */
-/* ============================================ */
-
-.historial-stock {
-
-    margin-top: 20px;
-
-    background: white;
-
-    padding: 25px;
-
-    border-radius: 12px;
-
-    box-shadow:
-        0 2px 8px rgba(0,0,0,0.08);
-
-}
-
-
-.historial-stock h3 {
-
-    color: #2e7d32;
-
-    margin-bottom: 15px;
-
-}
-
-
-.movimiento {
-
-    padding: 12px;
-
-    border-bottom: 1px solid #ddd;
-
-}
-
-
-.movimiento:last-child {
-
-    border-bottom: none;
-
-}
-
-
-
-/* ============================================ */
-/* NOTIFICACIÓN */
-/* ============================================ */
-
-#notificacion {
-
-    position: fixed;
-
-    bottom: 25px;
-
-    right: 25px;
-
-    background: #333;
-
-    color: white;
-
-    padding: 15px 20px;
-
-    border-radius: 8px;
-
-    display: none;
-
-    z-index: 1000;
-
-    box-shadow:
-        0 3px 10px rgba(0,0,0,0.3);
-
-}
-
-
-#notificacion.mostrar {
-
-    display: block;
-
-}
-
-
-
-/* ============================================ */
-/* CELULAR */
-/* ============================================ */
+/* ========================= */
+/* RESPONSIVE STOCK */
+/* ========================= */
 
 @media (max-width: 600px) {
-
-
-    main {
-
-        width: 95%;
-
-        margin: 20px auto;
-
-    }
-
-
-    header {
-
-        padding: 20px 15px;
-
-    }
-
-
-    header h1 {
-
-        font-size: 25px;
-
-    }
-
-
-    nav {
-
-        flex-direction: column;
-
-        padding: 10px;
-
-    }
-
-
-    nav button {
-
-        width: 100%;
-
-    }
-
-
-    .navegacion-pasos {
-
-        flex-direction: column;
-
-    }
-
-
-    .progreso {
-
-        flex-direction: column;
-
-    }
-
-
-    .progreso-item {
-
-        width: 100%;
-
-    }
-
 
     .botones-stock {
 
@@ -961,44 +758,9 @@ form button {
 
     }
 
-
     .botones-stock button {
 
         width: 100%;
-
-    }
-
-
-    .acciones {
-
-        flex-direction: column;
-
-    }
-
-
-    .acciones button {
-
-        width: 100%;
-
-    }
-
-
-    .ingredientes-grid {
-
-        grid-template-columns: 1fr;
-
-    }
-
-
-    #notificacion {
-
-        left: 15px;
-
-        right: 15px;
-
-        bottom: 15px;
-
-        text-align: center;
 
     }
 
