@@ -1,4 +1,4 @@
-const CACHE_NAME = "vita-canete-v1";
+const CACHE_NAME = "vita-canete-v2";
 
 const ARCHIVOS = [
     "./",
